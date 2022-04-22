@@ -107,7 +107,21 @@ relativo dipartimento, in ordine alfabetico per cognome e nome
 
 
 5. Selezionare tutti i corsi di laurea con i relativi corsi e insegnanti
+
+SELECT `degrees`.name as Degree, `courses`.`name` as Course, CONCAT(`teachers`.`name`, ' ', `teachers`.`surname`) as Teacher
+FROM `courses` JOIN `degrees` ON `courses`.`degree_id` = `degrees`.`id`
+JOIN `course_teacher` ON  `course_teacher`.`course_id` = `courses`.`id`
+JOIN `teachers` ON `course_teacher`.`teacher_id` = `teachers`.`id`;
+
 6. Selezionare tutti i docenti che insegnano nel Dipartimento di Matematica (54)
+
+SELECT CONCAT(`teachers`.`name`, ' ', `teachers`.`surname`) as Teacher, `degrees`.name as Teach_in
+FROM `departments` JOIN `degrees` ON `degrees`.`department_id` = `departments`.`id` 
+JOIN `courses` ON `courses`.`degree_id` = `degrees`.`id`
+JOIN `course_teacher` ON  `course_teacher`.`course_id` = `courses`.`id`
+JOIN `teachers` ON `course_teacher`.`teacher_id` = `teachers`.`id`  
+WHERE `departments`.`name` LIKE '%Matematica';
+
 7. BONUS: Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per
 superare ciascuno dei suoi esami
 */
